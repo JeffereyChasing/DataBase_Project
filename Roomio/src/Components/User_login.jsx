@@ -1,18 +1,34 @@
 import React, { useState } from 'react';
+import axios from "axios"
+import { useNavigate } from 'react-router-dom'
 
 const User_login = () => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    //not implemented
 
+
+    const [values, setValues] = useState({
+        username: '',
+        password: ''
+    })
+    //not implemented
+    const nav  = useNavigate()
+    //navigate to another page
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log("not yet implemented ");
+        axios.post("http://localhost:3600/server/login",values)
+            .then(result=>console.log(result),nav("/MainPage"))
+            //navigate to main page after loginin
+            .catch(err => console.log(err))
+            // see what the error is
+        
     };
+
+
+
 
     const handleCreateAccount = () => {
         console.log('not yet implemented');
     };
+
 
     return (
         <div style={styles.container}>
@@ -24,8 +40,7 @@ const User_login = () => {
                         <input
                             type="text"
                             id="username"
-                            value={username}
-                            onChange={e => setUsername(e.target.value)}
+                            onChange={(e) => setValues({...values, username : e.target.value})} 
                             required
                             //mandatory
                             style={styles.input}
@@ -36,8 +51,7 @@ const User_login = () => {
                         <input
                             type="password"
                             id="password"
-                            value={password}
-                            onChange={e => setPassword(e.target.value)}
+                            onChange={(e) => setValues({...values, password : e.target.value})} 
                             required
                             //mandatory
                             style={styles.input}
@@ -84,6 +98,7 @@ const styles = {
         border: '1px solid #ccc',
         borderRadius: 4,
     },
+    //styles
 
 }
 
