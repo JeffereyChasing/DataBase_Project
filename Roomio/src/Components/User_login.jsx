@@ -26,7 +26,7 @@ const User_login = () => {
 
 
     const handleCreateAccount = () => {
-        console.log('not yet implemented');
+        nav("/createAccount")
     };
 
 
@@ -63,7 +63,11 @@ const User_login = () => {
                     <p style={{textAlign: 'center', color: '#007BFF', textDecoration: 'none',fontWeight: 'bold',}}>
                          <a href="#" onClick={handleCreateAccount} style={{   color: '#007BFF', textDecoration: 'none',fontWeight: 'bold',}}>Create account</a>
                     </p>
+
+
                     
+
+
                 </form>
             </div>
         </div>
