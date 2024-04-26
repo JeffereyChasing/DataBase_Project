@@ -1,10 +1,8 @@
 import React,{ useState }from 'react'
-
+import axios from "axios"
 
 
 const CreateAccount = () => {
-
-
     const [user,setUser] = useState({
         username:"",
         first_name:"",
@@ -13,14 +11,24 @@ const CreateAccount = () => {
         gender:"",
         email:"",
         phone:"",
-        password:"",
+        passwd:"",
 
     })
+    //maintain and update all account informaiton
 
     const handleSubmit = (event) => {
-        event.preventDefault();
-    };
-//we can assume everybody using their username and password to log-in
+      event.preventDefault();
+      axios.post("http://localhost:3600/server/CreateAccount",user)
+          .then(result=>{
+            if(result.data.Status){
+              console.log("success")
+            }
+          })
+          .catch(err => console.log(err))
+          // see what the error is
+      
+  };
+
     
   return (
     <div>
@@ -34,7 +42,7 @@ const CreateAccount = () => {
           <input
             type="text"
             id="username"
-            onChange={(e) => setUser({ ...values, username: e.target.value })}
+            onChange={(e) => setUser({ ...user, username: e.target.value })}
             required
             //mandatory
             style={styles.input}
@@ -42,13 +50,13 @@ const CreateAccount = () => {
         </div>
 
         <div style={{ marginBottom: "15px" }}>
-          <label style={{ marginRight: "5px" }} htmlFor="username">
+          <label style={{ marginRight: "5px" }} htmlFor="first_name">
           first_name:
           </label>
           <input
             type="text"
             id="first_name"
-            onChange={(e) => setUser({ ...values, username: e.target.value })}
+            onChange={(e) => setUser({ ...user, first_name: e.target.value })}
             required
             //mandatory
             style={styles.input}
@@ -56,28 +64,13 @@ const CreateAccount = () => {
         </div>
 
         <div style={{ marginBottom: "15px" }}>
-          <label style={{ marginRight: "5px" }} htmlFor="username">
-            Username:
+          <label style={{ marginRight: "5px" }} htmlFor="last_name">
+            last_name:
           </label>
           <input
             type="text"
-            id="username"
-            onChange={(e) => setUser({ ...values, username: e.target.value })}
-            required
-            //mandatory
-            style={styles.input}
-          />
-        </div>
-
-
-        <div style={{ marginBottom: "15px" }}>
-          <label style={{ marginRight: "5px" }} htmlFor="username">
-            Username:
-          </label>
-          <input
-            type="text"
-            id="username"
-            onChange={(e) => setUser({ ...values, username: e.target.value })}
+            id="last_name"
+            onChange={(e) => setUser({ ...user, last_name: e.target.value })}
             required
             //mandatory
             style={styles.input}
@@ -86,13 +79,13 @@ const CreateAccount = () => {
 
 
         <div style={{ marginBottom: "15px" }}>
-          <label style={{ marginRight: "5px" }} htmlFor="username">
-            Username:
+          <label style={{ marginRight: "5px" }} htmlFor="DOB">
+            DOB:
           </label>
           <input
             type="text"
-            id="username"
-            onChange={(e) => setUser({ ...values, username: e.target.value })}
+            id="DOB"
+            onChange={(e) => setUser({ ...user, DOB: e.target.value })}
             required
             //mandatory
             style={styles.input}
@@ -101,13 +94,13 @@ const CreateAccount = () => {
 
 
         <div style={{ marginBottom: "15px" }}>
-          <label style={{ marginRight: "5px" }} htmlFor="username">
-            Username:
+          <label style={{ marginRight: "5px" }} htmlFor="gender">
+            gender:
           </label>
           <input
             type="text"
-            id="username"
-            onChange={(e) => setUser({ ...values, username: e.target.value })}
+            id="gender"
+            onChange={(e) => setUser({ ...user, gender: e.target.value })}
             required
             //mandatory
             style={styles.input}
@@ -116,13 +109,13 @@ const CreateAccount = () => {
 
 
         <div style={{ marginBottom: "15px" }}>
-          <label style={{ marginRight: "5px" }} htmlFor="username">
-            Username:
+          <label style={{ marginRight: "5px" }} htmlFor="email">
+            email:
           </label>
           <input
             type="text"
-            id="username"
-            onChange={(e) => setUser({ ...values, username: e.target.value })}
+            id="email"
+            onChange={(e) => setUser({ ...user, email: e.target.value })}
             required
             //mandatory
             style={styles.input}
@@ -130,23 +123,41 @@ const CreateAccount = () => {
         </div>
 
 
-
+        <div style={{ marginBottom: "15px" }}>
+          <label style={{ marginRight: "5px" }} htmlFor="phone">
+            Phone:
+          </label>
+          <input
+            type="text"
+            id="phone"
+            onChange={(e) => setUser({ ...user, phone: e.target.value })}
+            required
+            //mandatory
+            style={styles.input}
+          />
+        </div>
 
 
 
         <div style={styles.inputGroup}>
-          <label style={{ marginRight: "9px" }} htmlFor="password">
+          <label style={{ marginRight: "9px" }} htmlFor="passwd">
             Password:
           </label>
           <input
             type="password"
-            id="password"
-            onChange={(e) => setValues({ ...values, password: e.target.value })}
+            id="passwd"
+            onChange={(e) => setUser({ ...user, passwd: e.target.value })}
             required
             //mandatory
             style={styles.input}
           />
         </div>
+
+
+
+
+
+
 
 
 
@@ -173,7 +184,7 @@ const CreateAccount = () => {
             justifyContent: "center",
           }}
         >
-          Login
+          Create Account
         </button>
 
         <p
@@ -184,17 +195,7 @@ const CreateAccount = () => {
             fontWeight: "bold",
           }}
         >
-          <a
-            href="#"
-            onClick={{handleSubmit}}
-            style={{
-              color: "#007BFF",
-              textDecoration: "none",
-              fontWeight: "bold",
-            }}
-          >
-            Create account
-          </a>
+          
         </p>
       </form>
     </div>
