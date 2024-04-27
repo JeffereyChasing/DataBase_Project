@@ -4,7 +4,8 @@ import{Routes,Route,BrowserRouter} from 'react-router-dom'
 import MainPage from './Components/MainPage'
 import CreateAccount from './Components/CreateAccount'
 import Searchapartment from './Components/Searchapartment'
-import AddPost from './Components/AddPost'
+import Add from './Components/Add'
+import View from './Components/View'
 
 function App() {
   return (
@@ -15,7 +16,8 @@ function App() {
     <Route path='/MainPage' element={<MainPage />}></Route>
     <Route path='/CreateAccount' element={<CreateAccount />}></Route>
     <Route path='/searchapartment' element={<Searchapartment />}></Route>
-    <Route path='/addPost' element={<AddPost />}></Route>
+    <Route path='/add' element={<Add />}></Route>
+    <Route path='/view' element={<View />}></Route>
 
     </Routes>
     </BrowserRouter>

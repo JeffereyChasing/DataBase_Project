@@ -44,7 +44,6 @@ baserouter.post("/login", (request, response) => {
     
   })
   //create account
-
   
   baserouter.post("/searchapartment", (request, response) => {
     console.log(request.body)
@@ -80,20 +79,28 @@ baserouter.post("/login", (request, response) => {
 })
     */
 
-baserouter.post("/addPost", (request, response) => {
+baserouter.post("/add", (request, response) => {
   console.log(request.body)
-  const sql = "INSERT INTO interests (username, UnitRentID, RoommateCnt, MoveInDate) VALUES ?";
-  database.query(sql, [req.body],(error,result)=>{
-    return response.json({Status:true})
-  })
+  const sql = "INSERT INTO interests (username, UnitRentID, RoommateCnt, MoveInDate) VALUES (?,?,?,?)";
+
+  var a = request.body['username']
+  var b = request.body['UnitRentID']
+  var c = request.body['RoommateCnt']
+  var d = request.body['MoveInDate']
+ 
+  database.query(sql,[a,b,c,d])
+
 });
 
-//add interest
+// successfully add interest
 
 
+baserouter.get('./view',(request,result)=>{
+  const sql = "SELECT * FROM interests"
+  database.query(sql)
+})
 
 
-base
 
 
   
