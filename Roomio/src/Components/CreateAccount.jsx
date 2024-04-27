@@ -1,5 +1,6 @@
 import React,{ useState }from 'react'
 import axios from "axios"
+import { useNavigate } from 'react-router-dom'
 
 
 const CreateAccount = () => {
@@ -14,13 +15,16 @@ const CreateAccount = () => {
         passwd:"",
 
     })
-    //maintain and update all account informaiton
 
+    const nav  = useNavigate()
+
+    //maintain and update all account informaiton
     const handleSubmit = (event) => {
       event.preventDefault();
       axios.post("http://localhost:3600/server/CreateAccount",user)
           .then(result=>{
             if(result.data.Status){
+              nav("/MainPage")
               console.log("success")
             }
           })

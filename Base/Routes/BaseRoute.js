@@ -1,10 +1,8 @@
 import express from "express";
 import database from "../util/database.js";
-import { useNavigate } from 'react-router-dom.js'
 
 
 const baserouter = express.Router();
-const nav  = useNavigate()
 
 baserouter.post("/login", (request, response) => {
     console.log(request.body)
@@ -17,17 +15,16 @@ baserouter.post("/login", (request, response) => {
         const exists = results[0].userExists;
         //check whether there is a username in the table; we only allow the user to proceed if they do have a username in the system
         if(exists){
-          nav('/MainPage')
           
+        }else{
+          console.log("Wrong")
         }
 
         console.log('Does the username "this" exist?', exists ? 'Yes' : 'No');
       }
     });
   });
-
-
-
+  // login-in create account
 
   baserouter.post("/CreateAccount",(request,response)=>{
 
@@ -43,7 +40,62 @@ baserouter.post("/login", (request, response) => {
 
     database.query(sql,[a,b,c,d,e,f,g,h])
     // insert into the user table
+
     
   })
+  //create account
+
+  
+  baserouter.post("/searchapartment", (request, response) => {
+    console.log(request.body)
+    const sql = "SELECT * FROM apartmentunit WHERE companyName = ?";
+
+  // The value to substitute into the query placeholder
+    const value = [request.body.companyname];
+
+  // Execute the query with the parameter
+    database.query(sql, value, (error, results) => {
+    if (error) {
+      // If an error occurs, log it and send a server error response
+      console.error("Error executing the query:", error);
+      return response.status(500).json({ error: "Database query failed" });
+    }
+
+    // If no error, log and send the results as the response
+    console.log("Query results:", results);
+   
+    //response.json(results);
+  });
+  })
+  //searchapartment(not yet)
+
+
+/*
+   baserouter.get('/searchapartment',(request, response) => {
+    const sql =  "SELECT * FROM apartmentunit WHERE companyName = ?";
+    database.query(sql, request.body['companyname'],(err, result) => {
+        if(err) return response.json({Status: false, Error: "Query Error"})
+        return response.json({Status: true, Result: result})
+    })
+})
+    */
+
+baserouter.post("/addPost", (request, response) => {
+  console.log(request.body)
+  const sql = "INSERT INTO interests (username, UnitRentID, RoommateCnt, MoveInDate) VALUES ?";
+  database.query(sql, [req.body],(error,result)=>{
+    return response.json({Status:true})
+  })
+});
+
+//add interest
+
+
+
+
+base
+
+
+  
 
 export {baserouter};

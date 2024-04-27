@@ -1,37 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import axios from "axios"
-import { useNavigate } from 'react-router-dom'
-
-const User_login = () => {
 
 
-    const [values, setValues] = useState({
-        username: '',
-        password: ''
-    })
-    //not implemented
-    const nav  = useNavigate()
-    //navigate to another page
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        axios.post("http://localhost:3600/server/login",values)
-            .then(result=>console.log(result.data.Status),nav("/MainPage"))
-            //navigate to main page after loginin
-            .catch(err => console.log(err))
-            // see what the error is
-        
-    };
+const AddPost = () => {
+    const {post,setPost} = useState()
+    const handleSubmit = (e) =>{
+        e.preventDefault()
+        axios.post("http://localhost:3600/server/addPost",{post})
+        .then(result=>console.log(result.data))
+        //navigate to main page after loginin
+        .catch(err => console.log(err))
+        // see what the error is
 
-
-
-
-    const handleCreateAccount = () => {
-        nav("/createAccount")
-    };
-
-
-    return (
-        <div style={styles.container}>
+  return (
+    <div style={styles.container}>
             <div style={styles.loginBox}>
                 <h1 style={styles.header}>Login Page</h1>
                 <form onSubmit={handleSubmit} style={styles.form}>
@@ -105,6 +87,6 @@ const styles = {
     //styles
 
 }
+}
 
-
-export default User_login;
+export default AddPost;
