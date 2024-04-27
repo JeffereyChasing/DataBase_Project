@@ -95,9 +95,11 @@ baserouter.post("/add", (request, response) => {
 // successfully add interest
 
 
-baserouter.get('./view',(request,result)=>{
+baserouter.get('/view',(request,response)=>{
   const sql = "SELECT * FROM interests"
-  database.query(sql)
+  database.query(sql,(error,result)=>{
+    return response.json({Status:true,Result:result})
+  })
 })
 
 

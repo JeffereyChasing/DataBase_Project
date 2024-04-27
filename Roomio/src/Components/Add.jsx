@@ -1,5 +1,7 @@
 import React ,{useState}from 'react'
 import axios from "axios"
+import { useNavigate } from 'react-router-dom'
+
 
 const Add = () => {
 
@@ -23,6 +25,11 @@ const Add = () => {
             // see what the error is
         
     };
+
+    const nav  = useNavigate()
+    const navigate =()=>{
+        nav("/view")
+    }
     
     return (
         <div style={styles.container}>
@@ -80,7 +87,7 @@ const Add = () => {
 
 
                     <button type="submit" style={{padding: 10, backgroundColor: '#007BFF',color: 'white', border: 'none',
-                    borderRadius: 4,  cursor: 'pointer', marginTop: 15,justifyContent:"center"}}>Add Post</button>
+                    borderRadius: 4,  cursor: 'pointer', marginTop: 15,justifyContent:"center"}} onClick={navigate}>Add Post</button>
 
                 
                     
