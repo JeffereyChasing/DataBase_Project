@@ -13,53 +13,41 @@ baserouter.post("/login", (request, response) => {
       } else {
         //check whether there is a username in the table; we only allow the user to proceed if they do have a username in the system
         if(result[0].userExists == 1){
-          return response.json({loginStatus:true})          
+          console.log(result[0].userExists)      
+
+          return response.json({loginStatus:true})    
         }else{
-          return response.json({loginStatus:false})          
+          console.log(result[0].userExists)      
+
+          return response.json({loginStatus:false})       
+   
         }
       }
     });
   });
   // login-in create account
 
-baserouter.post("/CreateAccount",(request,response)=>{
+  baserouter.post("/CreateAccount", (request, response) => {
+    const sql = "INSERT INTO users (username, first_name, last_name, DOB, gender, email, Phone, passwd) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    var a = request.body['username'];
+    var b = request.body['first_name'];
+    var c = request.body['last_name'];
+    var d = request.body['DOB'];
+    var e = request.body['gender'];
+    var f = request.body['email'];
+    var g = request.body['phone'];
+    var h = request.body['passwd'];
 
-    const sql = "INSERT INTO users (username, first_name, last_name, DOB, gender, email, Phone, passwd) VALUES (?,?,?,?,?,?,?,?)"
-    var a = request.body['username']
-    var b = request.body['first_name']
-    var c = request.body['last_name']
-    var d = request.body['DOB']
-    var e = request.body['gender']
-    var f = request.body['email']
-    var g = request.body['phone']
-    var h = request.body['passwd']
+    database.query(sql, [a, b, c, d, e, f, g, h], (error, results) => {
+      if(error) return response.json({Status: false, Error: "Query Error"})
+      return response.json({Status: true})
+    });
+});
 
-    database.query(sql,[a,b,c,d,e,f,g,h])
-    // insert into the user table
-
-    
-  })
   //create account
 
 baserouter.post("/searchapartment",(request, response) => {
-    const sql =  "SELECT 
-    au.UnitRentID,au.unitNumber,au.MonthlyRent,au.squareFootage,au.AvailableDateForMoveIn,MAX(CASE WHEN p.PetType = 'Dog' THEN CASE WHEN pp.isAllowed THEN 'Allowed' ELSE 'Not Allowed' END END) AS DogAllowed,MAX(CASE WHEN p.PetType = 'Cat' THEN CASE WHEN pp.isAllowed THEN 'Allowed' ELSE 'Not Allowed' END END) AS CatAllowed,MAX(CASE WHEN p.PetType = 'Bird' THEN CASE WHEN pp.isAllowed THEN 'Allowed' ELSE 'Not Allowed' END END) AS BirdAllowed, MAX(CASE WHEN p.PetType = 'Turtle' THEN CASE WHEN pp.isAllowed THEN 'Allowed' ELSE 'Not Allowed' END END) AS TurtleAllowed,
-    MAX(CASE WHEN p.PetType = 'Rodent' THEN CASE WHEN pp.isAllowed THEN 'Allowed' ELSE 'Not Allowed' END END) AS RodentAllowed FROM 
-    ApartmentUnit au
-LEFT JOIN 
-    PetPolicy pp ON au.CompanyName = pp.CompanyName AND au.BuildingName = pp.BuildingName
-LEFT JOIN 
-    Pets p ON pp.PetType = p.PetType AND pp.PetSize = p.PetSize AND p.username = ?
-WHERE 
-    au.CompanyName = ? AND
-    au.BuildingName = ?
-GROUP BY 
-    au.UnitRentID,
-    au.unitNumber,
-    au.MonthlyRent,
-    au.squareFootage,
-    au.AvailableDateForMoveIn;
-";  
+    const sql =  "SELECT au.UnitRentID,au.unitNumber,au.MonthlyRent,au.squareFootage,au.AvailableDateForMoveIn,MAX(CASE WHEN p.PetType = 'Dog' THEN CASE WHEN pp.isAllowed THEN 'Allowed' ELSE 'Not Allowed' END END) AS DogAllowed,MAX(CASE WHEN p.PetType = 'Cat' THEN CASE WHEN pp.isAllowed THEN 'Allowed' ELSE 'Not Allowed' END END) AS CatAllowed,MAX(CASE WHEN p.PetType = 'Bird' THEN CASE WHEN pp.isAllowed THEN 'Allowed' ELSE 'Not Allowed' END END) AS BirdAllowed, MAX(CASE WHEN p.PetType = 'Turtle' THEN CASE WHEN pp.isAllowed THEN 'Allowed' ELSE 'Not Allowed' END END) AS TurtleAllowed, MAX(CASE WHEN p.PetType = 'Rodent' THEN CASE WHEN pp.isAllowed THEN 'Allowed' ELSE 'Not Allowed' END END) AS RodentAllowed FROM ApartmentUnit au LEFT JOIN PetPolicy pp ON au.CompanyName = pp.CompanyName AND au.BuildingName = pp.BuildingName LEFT JOIN Pets p ON pp.PetType = p.PetType AND pp.PetSize = p.PetSize AND p.username = ? WHERE au.CompanyName = ? AND au.BuildingName = ? GROUP BY au.UnitRentID, au.unitNumber, au.MonthlyRent,au.squareFootage,au.AvailableDateForMoveIn;";  
     database.query(sql, [request.body['companyname'],request.body['buildingname'],request.body['username']],(err, result) => {
       console.log({Result: result});
       return response.json({Status:true,Result:result})          

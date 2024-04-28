@@ -15,6 +15,7 @@ const CreateAccount = () => {
         passwd:"",
 
     })
+    const [message, setMessage] = useState(''); // State to store the feedback message
 
     const nav  = useNavigate()
 
@@ -24,8 +25,18 @@ const CreateAccount = () => {
       axios.post("http://localhost:3600/server/CreateAccount",user)
           .then(result=>{
             if(result.data.Status){
-              nav("/MainPage")
-              console.log("success")
+              console.log(result.data.Status)
+              setMessage("successfully created account")
+              setTimeout(() => {
+                nav("/MainPage")
+            }, 2000); 
+            }else{
+              console.log(result.data.Status)
+              setMessage("error occurs, please try with different parameters")
+              setTimeout(() => {
+                window.location.reload(); 
+                //Reload the page after a short delay
+            }, 2000); 
             }
           })
           .catch(err => console.log(err))
@@ -158,6 +169,7 @@ const CreateAccount = () => {
         </div>
 
 
+        {message && <p style={styles.message}>{message}</p>}
 
 
 
@@ -235,6 +247,12 @@ const styles = {
         border: '1px solid #ccc',
         borderRadius: 4,
     },
+    message: {
+      color: 'red',
+      fontWeight: 'bold',
+      textAlign: 'center',
+      marginTop: 15,
+  },
     //styles
 
 }
