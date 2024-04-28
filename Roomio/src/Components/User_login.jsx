@@ -55,6 +55,7 @@ const User_login = () => {
                             style={styles.input}
                         />
                     </div>
+                    <img src={"../assets/bg.jpg"}/>
                     <div style={styles.inputGroup}>
                         <label style={{marginRight:"9px"}} htmlFor="password">Password:</label>
                         <input
@@ -89,7 +90,7 @@ const styles = {
         justifyContent: 'center',
         alignItems: 'center',
         height: '100vh',
-        backgroundColor: 'lightgrey',
+        backgroundImage: 'url("../assets/bg.jpg")',
     },
     loginBox: {
         background: 'white',
