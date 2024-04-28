@@ -15,6 +15,7 @@ const Searchapartment = () => {
     const [unit, setUnit] = useState({
         companyname: "",
         buildingname:"",
+        username:"",
     })
 
     const [rooms, setRooms] = useState([])
@@ -82,6 +83,18 @@ return (
                       type="text"
                       id="company"
                       onChange={(e) => setUnit({...unit, companyname : e.target.value})} 
+                      required
+                      //mandatory
+                      style={styles.input}
+                  />
+              </div>
+
+              <div style={styles.inputGroup}>
+                  <label style={{marginRight:"9px"}} htmlFor="username">Username:</label>
+                  <input
+                      type="text"
+                      id="username"
+                      onChange={(e) => setUnit({...unit, username : e.target.value})} 
                       required
                       //mandatory
                       style={styles.input}
