@@ -1,27 +1,47 @@
 import axios from "axios"
 import React, { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
+import { useLoaderData } from 'react-router-dom';
 
 const Searchapartment = () => {
 
-  const [unit, setUnit] = useState({
-    companyname: '',
-    buildingname: ''
-})
+   
+
+    const [unit, setUnit] = useState({
+        companyname: "",
+        buildingname:"",
+    })
+
+    const [rooms, setRooms] = useState([])
 
 
-  
+    const nav = useNavigate()
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        axios.post("http://localhost:3600/server/searchapartment",unit)
+            .then(result=>{
+              if(result.data.Status){
+                setRooms(result.data.Result)
+                console.log(result)
+              }
+            })
+            .catch(err => console.log(err))
+            // see what the error is
+    };
 
-const nav  = useNavigate()
-const handleSubmit = (event) => {
-  event.preventDefault();
-  axios.post("http://localhost:3600/server/searchapartment",unit)
-      .then(result=>console.log(result.data),nav("/MainPage"))
-      //navigate to main page after loginin
-      .catch(err => console.log(err))
-      // see what the error is
-  
-};
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 return (
   <div style={styles.container}>
@@ -42,7 +62,7 @@ return (
               <div style={styles.inputGroup}>
                   <label style={{marginRight:"9px"}} htmlFor="companyname">Company:</label>
                   <input
-                      type="password"
+                      type="text"
                       id="company"
                       onChange={(e) => setUnit({...unit, companyname : e.target.value})} 
                       required
@@ -56,11 +76,36 @@ return (
               <p style={{textAlign: 'center', color: '#007BFF', textDecoration: 'none',fontWeight: 'bold',}}>
                    <a href="#"  style={{   color: '#007BFF', textDecoration: 'none',fontWeight: 'bold',}}>Additioanl feature</a>
               </p>
+
+
+              <table style={styles.table}>
+            <thead>
+              <tr>
+                <th style={styles.th}>UnitRentID</th>
+                <th style={styles.th}>CompanyName</th>
+                <th style={styles.th}>BuildingName</th>
+                <th style={styles.th}>unitNumber</th>
+                <th style={styles.th}>MonthlyRent</th>
+                <th style={styles.th}>squareFootage</th>
+                <th style={styles.th}>AvailableDateForMoveIn</th>
+              </tr>
+
+             
+            </thead>
+
+           
+
+
+          </table>
+
+          {rooms.map(product => (
+        <li key={product.id}>
+          {product.UnitRentID} - ${product.CompanyName}
+        </li>
+      ))}
+     
               
-
-              
-
-
+      
           </form>
       </div>
   </div>
@@ -81,7 +126,7 @@ const styles = {
       padding: 25,
       borderRadius: 10,
       boxShadow: '10 10 30px rgba(0, 0, 0, 0.2)',
-      width: '300px',
+      width: '10000px',
   },
   header: {
       textAlign: 'center',
@@ -96,6 +141,26 @@ const styles = {
       border: '1px solid #ccc',
       borderRadius: 4,
   },
+  table: {
+    width: '100%',
+    borderCollapse: 'collapse',
+  },
+  th: {
+    background: '#f4f4f4',
+    color: '#333',
+    fontWeight: 'bold',
+    border: '1px solid #ccc',
+    padding: '8px',
+    textAlign: 'left',
+  },
+  td: {
+    border: '1px solid #ccc',
+    padding: '8px',
+    textAlign: 'left',
+  },
+  tbody:{
+    padding:"300px"
+  }
   //styles
 
 }

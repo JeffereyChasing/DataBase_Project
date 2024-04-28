@@ -6,6 +6,9 @@ import CreateAccount from './Components/CreateAccount'
 import Searchapartment from './Components/Searchapartment'
 import Add from './Components/Add'
 import View from './Components/View'
+import Pets from './Components/Pets'
+import InterestGroup from './Components/InterestGroup'
+
 
 function App() {
   return (
@@ -18,6 +21,8 @@ function App() {
     <Route path='/searchapartment' element={<Searchapartment />}></Route>
     <Route path='/add' element={<Add />}></Route>
     <Route path='/view' element={<View />}></Route>
+    <Route path='/pets' element={<Pets />}></Route>
+    <Route path='/interestgroup' element={<InterestGroup />}></Route>
 
     </Routes>
     </BrowserRouter>

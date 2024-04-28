@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 
 const User_login = () => {
 
-
+    axios.defaults.withCredentials = true;
     const [values, setValues] = useState({
         username: '',
         password: ''
@@ -15,7 +15,16 @@ const User_login = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         axios.post("http://localhost:3600/server/login",values)
-            .then(result=>console.log(result.data.Status),nav("/MainPage"))
+            .then(result=>{
+                if(result.data.loginStaus){
+                    nav("/MainPage")
+                    //need change
+                }else{
+                    console.log(result.data.loginStatus)
+                    nav("/MainPage")
+                }
+            })
+                
             //navigate to main page after loginin
             .catch(err => console.log(err))
             // see what the error is
