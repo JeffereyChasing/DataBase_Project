@@ -5,8 +5,13 @@ import { useLoaderData } from 'react-router-dom';
 
 const Searchapartment = () => {
 
-   
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'  
+    });
+  };
     const [unit, setUnit] = useState({
         companyname: "",
         buildingname:"",
@@ -14,7 +19,15 @@ const Searchapartment = () => {
 
     const [rooms, setRooms] = useState([])
 
-
+    useEffect(() => {
+      if (rooms.length > 0) {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      }
+    }, [rooms]);  // This effect runs every time 'rooms' changes.
+  
     const nav = useNavigate()
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -46,7 +59,9 @@ const Searchapartment = () => {
 return (
   <div style={styles.container}>
       <div style={styles.loginBox}>
-          <h1 style={styles.header}>Search for Apartment</h1>
+          <h1 style={styles.header}>Search for Apartment 
+</h1>
+    
           <form onSubmit={handleSubmit} style={styles.form}>
               <div style={{marginBottom:"15px"}}>
                   <label style={{marginRight:"5px"}} htmlFor="buildingname">Building:</label>
@@ -59,6 +74,8 @@ return (
                       style={styles.input}
                   />
               </div>
+              <button onClick={scrollToTop} style={styles.scrollButton}>Scroll to Top</button>
+
               <div style={styles.inputGroup}>
                   <label style={{marginRight:"9px"}} htmlFor="companyname">Company:</label>
                   <input
@@ -78,7 +95,10 @@ return (
               </p>
 
 
-              <table style={styles.table}>
+
+              <table style={styles.table} >
+
+      
             <thead>
               <tr>
                 <th style={styles.th}>UnitRentID</th>
@@ -89,20 +109,30 @@ return (
                 <th style={styles.th}>squareFootage</th>
                 <th style={styles.th}>AvailableDateForMoveIn</th>
               </tr>
-
              
             </thead>
 
-           
+            <tbody>
+              {rooms.map(i => (
+                <tr key={i.id}>
+                  <td style={styles.td}>{i.UnitRentID}</td>
+                  <td style={styles.td}>{i.CompanyName}</td>
+                  <td style={styles.td}>{i.BuildingName}</td>
+                  <td style={styles.td}>{i.unitNumber}</td>
+                  <td style={styles.td}>{i.MonthlyRent}</td>
+                  <td style={styles.td}>{i.squareFootage}</td>
+                  <td style={styles.td}>{i.AvailableDateForMoveIn}</td>
+                </tr>
+              ))}
+            </tbody>
 
+            
+
+          
 
           </table>
 
-          {rooms.map(product => (
-        <li key={product.id}>
-          {product.UnitRentID} - ${product.CompanyName}
-        </li>
-      ))}
+    
      
               
       
@@ -135,6 +165,7 @@ const styles = {
   form: {
       display: 'flex',
       flexDirection: 'column',
+      height:"!000px"
   },
   input: {
       padding: 10,
@@ -144,6 +175,8 @@ const styles = {
   table: {
     width: '100%',
     borderCollapse: 'collapse',
+    
+    
   },
   th: {
     background: '#f4f4f4',
@@ -160,6 +193,17 @@ const styles = {
   },
   tbody:{
     padding:"300px"
+  },
+  scrollButton: {
+    position: 'fixed',
+    right: 20,
+    bottom: 20,
+    padding: '10px 20px',
+    backgroundColor: '#007BFF',
+    color: 'white',
+    border: 'none',
+    borderRadius: 4,
+    cursor: 'pointer'
   }
   //styles
 

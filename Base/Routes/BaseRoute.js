@@ -87,6 +87,14 @@ baserouter.post("/pets",(request, response) => {
 })
 //for showing pets
 
+baserouter.post("/interestgroup",(request, response) => {
+  const sql =  "SELECT u.*, i.MoveInDate, i.RoommateCnt FROM Users u JOIN Interests i ON u.username = i.username WHERE i.MoveInDate = ? AND i.RoommateCnt = ?;";
+  database.query(sql,[ request.body['movein'],request.body['roommate']],(err, result) => {
+    console.log({Result: result});
+    return response.json({Status:true,Result:result})          
+  })
+})
+//additionall feature: select interest
 
   
 
