@@ -117,10 +117,14 @@ return (
                 <th style={styles.th}>UnitRentID</th>
                 <th style={styles.th}>CompanyName</th>
                 <th style={styles.th}>BuildingName</th>
+
                 <th style={styles.th}>unitNumber</th>
                 <th style={styles.th}>MonthlyRent</th>
                 <th style={styles.th}>squareFootage</th>
                 <th style={styles.th}>AvailableDateForMoveIn</th>
+                <th style={styles.th}>PetType</th>
+                <th style={styles.th}>PetSize</th>
+                <th style={styles.th}>PetPermission</th>
               </tr>
              
             </thead>
@@ -135,6 +139,9 @@ return (
                   <td style={styles.td}>{i.MonthlyRent}</td>
                   <td style={styles.td}>{i.squareFootage}</td>
                   <td style={styles.td}>{i.AvailableDateForMoveIn}</td>
+                  <td style={styles.td}>{i.PetType}</td>
+                  <td style={styles.td}>{i.PetSize}</td>
+                  <td style={styles.td}>{i.PetPermission}</td>
                 </tr>
               ))}
             </tbody>

@@ -47,8 +47,8 @@ baserouter.post("/login", (request, response) => {
   //create account
 
 baserouter.post("/searchapartment",(request, response) => {
-    const sql =  "SELECT au.UnitRentID,au.unitNumber,au.MonthlyRent,au.squareFootage,au.AvailableDateForMoveIn,MAX(CASE WHEN p.PetType = 'Dog' THEN CASE WHEN pp.isAllowed THEN 'Allowed' ELSE 'Not Allowed' END END) AS DogAllowed,MAX(CASE WHEN p.PetType = 'Cat' THEN CASE WHEN pp.isAllowed THEN 'Allowed' ELSE 'Not Allowed' END END) AS CatAllowed,MAX(CASE WHEN p.PetType = 'Bird' THEN CASE WHEN pp.isAllowed THEN 'Allowed' ELSE 'Not Allowed' END END) AS BirdAllowed, MAX(CASE WHEN p.PetType = 'Turtle' THEN CASE WHEN pp.isAllowed THEN 'Allowed' ELSE 'Not Allowed' END END) AS TurtleAllowed, MAX(CASE WHEN p.PetType = 'Rodent' THEN CASE WHEN pp.isAllowed THEN 'Allowed' ELSE 'Not Allowed' END END) AS RodentAllowed FROM ApartmentUnit au LEFT JOIN PetPolicy pp ON au.CompanyName = pp.CompanyName AND au.BuildingName = pp.BuildingName LEFT JOIN Pets p ON pp.PetType = p.PetType AND pp.PetSize = p.PetSize AND p.username = ? WHERE au.CompanyName = ? AND au.BuildingName = ? GROUP BY au.UnitRentID, au.unitNumber, au.MonthlyRent,au.squareFootage,au.AvailableDateForMoveIn;";  
-    database.query(sql, [request.body['companyname'],request.body['buildingname'],request.body['username']],(err, result) => {
+  const sql = "SELECT AU.UnitRentID, AU.CompanyName, AU.BuildingName, AU.unitNumber, AU.MonthlyRent, AU.squareFootage, AU.AvailableDateForMoveIn, PP.PetType, PP.PetSize, CASE WHEN PP.isAllowed THEN 'Allowed' ELSE 'Not Allowed' END AS PetPermission FROM ApartmentUnit AU JOIN PetPolicy PP ON AU.CompanyName = PP.CompanyName AND AU.BuildingName = PP.BuildingName INNER JOIN Pets P ON P.PetType = PP.PetType AND P.PetSize = PP.PetSize AND P.username = ? WHERE AU.CompanyName = ? AND AU.BuildingName = ?";
+  database.query(sql, [request.body['username'],request.body['companyname'],request.body['buildingname']],(err, result) => {
       console.log({Result: result});
       return response.json({Status:true,Result:result})          
 
