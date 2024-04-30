@@ -15,7 +15,9 @@ const Average = () => {
   
     const [unit, setUnit] = useState({
         zipcode: "",
-        roomcount:"",
+        bedroom:"",
+        bathroom:"",
+        livingroom:""
     })
     //search
 
@@ -84,16 +86,44 @@ return (
               <button onClick={scrollToTop} style={styles.scrollButton}>Scroll to Top</button>
 
               <div style={styles.inputGroup}>
-                  <label style={{marginRight:"9px"}} htmlFor="roomcount">Number of Rooms:</label>
+                  <label style={{marginRight:"9px"}} htmlFor="roomcount">Number of Bedroom:</label>
                   <input
                       type="text"
-                      id="roomcount"
-                      onChange={(e) => setUnit({...unit, roomcount : e.target.value})} 
+                      id="bedroom"
+                      onChange={(e) => setUnit({...unit, bedroom : e.target.value})} 
                       required
                       //mandatory
                       style={styles.input}
                   />
               </div>
+
+              <div style={styles.inputGroup}>
+                  <label style={{marginRight:"9px"}} htmlFor="roomcount">Number of Bathroom:</label>
+                  <input
+                      type="text"
+                      id="bathroom"
+                      onChange={(e) => setUnit({...unit, bathroom : e.target.value})} 
+                      required
+                      //mandatory
+                      style={styles.input}
+                  />
+              </div>
+
+              <div style={styles.inputGroup}>
+                  <label style={{marginRight:"9px"}} htmlFor="roomcount">Number of Livingroom:</label>
+                  <input
+                      type="text"
+                      id="livingroom"
+                      onChange={(e) => setUnit({...unit, livingroom : e.target.value})} 
+                      required
+                      //mandatory
+                      style={styles.input}
+                  />
+              </div>
+
+
+
+
               <button type="submit" style={{padding: 10, backgroundColor: '#007BFF',color: 'white', border: 'none',
               borderRadius: 4,  cursor: 'pointer', marginTop: 15,justifyContent:"center"}}>Search</button>
 
@@ -115,8 +145,12 @@ return (
                 <th style={styles.th}>MonthlyRent</th>
                 <th style={styles.th}>AvailableDateForMoveIn</th>
                 <th style={styles.th}>AddrZipCode</th>
-                <th style={styles.th}>RoomCount</th>
+                <th style={styles.th}>Monthly Rent</th>
                 <th style={styles.th}>Average Monthly Rent</th>
+
+                <th style={styles.th}>Bathroom</th>
+                <th style={styles.th}>Bedroom</th>
+                <th style={styles.th}>Livingroom</th>
 
               </tr>
              
@@ -132,8 +166,12 @@ return (
                   <td style={styles.td}>{i.MonthlyRent} </td> 
                   <td style={styles.td}>{i.AvailableDateForMoveIn}</td>
                   <td style={styles.td}>{i.AddrZipCode}</td>
-                  <td style={styles.td}>{i.NumberOfRooms}</td>
-                  <td style={styles.td}>{i.AverageMonthlyRentPerRoomCountZip}</td>
+                  <td style={styles.td}>{i.MonthlyRent}</td>
+                  <td style={styles.td}>{i.AverageMonthlyRent}</td>
+
+                  <td style={styles.td}>{i.NumberOfBathrooms}</td>
+                  <td style={styles.td}>{i.NumberOfBedrooms}</td>
+                  <td style={styles.td}>{i.NumberOfLivingrooms}</td>
 
                 </tr>
               ))}

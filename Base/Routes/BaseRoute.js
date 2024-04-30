@@ -201,9 +201,8 @@ baserouter.post("/interestgroup",(request, response) => {
 
 baserouter.post("/average",(request, response) => {
   console.log(request.body)
-  const sql =  "SELECT DISTINCT au.UnitRentID, au.CompanyName, au.BuildingName, au.unitNumber, au.MonthlyRent, au.squareFootage, au.AvailableDateForMoveIn, ab.AddrZipCode, room_counts.NumberOfRooms, AVG(au.MonthlyRent) OVER (PARTITION BY ab.AddrZipCode, room_counts.NumberOfRooms) AS AverageMonthlyRentPerRoomCountZip FROM ApartmentUnit au JOIN ApartmentBuilding ab ON au.CompanyName = ab.CompanyName AND au.BuildingName = ab.BuildingName LEFT JOIN (   SELECT UnitRentID, COUNT(UnitRentID) AS NumberOfRooms FROM Rooms GROUP BY UnitRentID) room_counts ON au.UnitRentID = room_counts.UnitRentID LEFT JOIN Rooms r  ON au.UnitRentID = r.UnitRentID WHERE ab.AddrZipCode = 98011 AND room_counts.NumberOfRooms = 5;";
- 
-    database.query(sql,[ request.body['zipcode'],request.body['roomcount']],(err, result) => {
+  const sql = "SELECT au.UnitRentID, au.CompanyName, au.BuildingName, au.unitNumber, au.MonthlyRent, au.squareFootage, au.AvailableDateForMoveIn, ab.AddrZipCode, MonthlyRent, SUM(CASE WHEN r.name LIKE 'bathroom%' THEN 1 ELSE 0 END) AS NumberOfBathrooms, SUM(CASE WHEN r.name LIKE 'bedroom%' THEN 1 ELSE 0 END) AS NumberOfBedrooms, SUM(CASE WHEN r.name LIKE 'livingroom%' THEN 1 ELSE 0 END) AS NumberOfLivingrooms, AVG(au.MonthlyRent) OVER () AS AverageMonthlyRent FROM ApartmentUnit au JOIN ApartmentBuilding ab ON au.CompanyName = ab.CompanyName AND au.BuildingName = ab.BuildingName JOIN Rooms r ON au.UnitRentID = r.UnitRentID WHERE ab.AddrZipCode = ? GROUP BY au.UnitRentID, au.CompanyName, au.BuildingName, au.unitNumber, au.MonthlyRent, au.squareFootage, au.AvailableDateForMoveIn, ab.AddrZipCode HAVING SUM(CASE WHEN r.name LIKE 'bathroom%' THEN 1 ELSE 0 END) = ? AND SUM(CASE WHEN r.name LIKE 'bedroom%' THEN 1 ELSE 0 END) = ? AND SUM(CASE WHEN r.name LIKE 'livingroom%' THEN 1 ELSE 0 END) = ?;  "
+    database.query(sql,[ request.body['zipcode'],request.body['bathroom'],request.body['bedroom'],request.body['livingroom']],(err, result) => {
     console.log({Result: result});
     return response.json({Status:true,Result:result})          
   })
