@@ -9,6 +9,7 @@ const View= () => {
         axios.get("http://localhost:3600/server/view")
         .then(result => {
             setInterest(result.data.Result)
+            console.log(result.data)
         })
     },[])
 
@@ -22,25 +23,39 @@ const View= () => {
     return (
         <div>
 
-                    <button type="submit" style={{padding: 10, backgroundColor: '#007BFF',color: 'white', border: 'none',
-                    borderRadius: 4, cursor: 'pointer', marginTop: 15,marginLeft:"80vh"}} onClick={navigate}>Login</button>
+                
 
           <table style={styles.table}>
             <thead>
               <tr>
-                <th style={styles.th}>Username</th>
-                <th style={styles.th}>Unit Rent ID</th>
-                <th style={styles.th}>Roommate Count</th>
-                <th style={styles.th}>Move In Date</th>
+                <th style={styles.th}>AvailableDateForMoveIn</th>
+                <th style={styles.th}>BuildingName</th>
+                <th style={styles.th}>CompanyName</th>
+                <th style={styles.th}>MonthlyRent</th>
+
+                <th style={styles.th}>MoveInDate</th>
+                <th style={styles.th}>RoomateCnt</th>
+                <th style={styles.th}>UnitRentID</th>
+
+                <th style={styles.th}>squareFootage</th>
+                <th style={styles.th}>unitNumber</th>
+                <th style={styles.th}>username</th>
               </tr>
             </thead>
             <tbody>
               {interest.map(i => (
                 <tr key={i.id}>
-                  <td style={styles.td}>{i.username}</td>
-                  <td style={styles.td}>{i.UnitRentID}</td>
-                  <td style={styles.td}>{i.RoommateCnt}</td>
+                  <td style={styles.td}>{i.AvailableDateForMoveIn}</td>
+                  <td style={styles.td}>{i.BuildingName}</td>
+                  <td style={styles.td}>{i.CompanyName}</td>
+                  <td style={styles.td}>{i.MonthlyRent}</td>
+
                   <td style={styles.td}>{i.MoveInDate}</td>
+                  <td style={styles.td}>{i.RoomateCnt}</td>
+                  <td style={styles.td}>{i.UnitRentID}</td>
+                  <td style={styles.td}>{i.squareFootage}</td>
+                  <td style={styles.td}>{i.unitNumber}</td>
+                  <td style={styles.td}>{i.username}</td>
                 </tr>
               ))}
             </tbody>

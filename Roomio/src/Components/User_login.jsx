@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
+import bg from '../assets/bg.jpg'
 
 const User_login = () => {
     axios.defaults.withCredentials = true;
@@ -16,7 +17,8 @@ const User_login = () => {
         axios.post("http://localhost:3600/server/login", values)
             .then(result => {
                 if (result.data.loginStatus) {
-                    nav("/MainPage");
+                    console.log(result.data)
+                    nav(`/MainPage/`+result.data.username);
                 } else {
                     setError('Incorrect username or password.');
                      // Set error message
@@ -35,8 +37,18 @@ const User_login = () => {
 
     return (
         <div style={styles.container}>
+
+        <div style={styles.c}>
+            <h1 style={styles.header}>Welcome to Hotel Tranquility</h1>
+            <p style={styles.slogan}>
+                Experience the touch of luxury
+            </p>
+        </div>
+
             <div style={styles.loginBox}>
-                <h1 style={styles.header}>Login Page</h1>
+                <h1 style={{textAlign:"center",  fontSize: '28px', 
+        color:'skyblue', 
+        textShadow: '1px 1px 2px #808080',}}>Login Page</h1>
                 <form onSubmit={handleSubmit} style={styles.form}>
                     <div style={{ marginBottom: "15px" }}>
                         <label style={{ marginRight: "5px" }} htmlFor="username">Username:</label>
@@ -72,10 +84,11 @@ const User_login = () => {
 const styles = {
     container: {
         display: 'flex',
+        flexDirection:"column",
         justifyContent: 'center',
         alignItems: 'center',
         height: '100vh',
-        backgroundImage: 'url("../assets/bg.jpg")',
+        backgroundImage: `url(${bg})`,
     },
     loginBox: {
         background: 'white',
@@ -84,10 +97,7 @@ const styles = {
         boxShadow: '10 10 30px rgba(0, 0, 0, 0.2)',
         width: '300px',
     },
-    header: {
-        textAlign: 'center',
-        marginBottom: 20,
-    },
+    
     form: {
         display: 'flex',
         flexDirection: 'column',
@@ -117,6 +127,24 @@ const styles = {
         color: '#007BFF',
         textDecoration: 'none',
         fontWeight: 'bold',
+    },
+    c: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '30vh', 
+    },
+    header: {
+        fontSize: '48px', 
+        color: '#FFD700', 
+        textShadow: '1px 1px 2px #808080',
+    },
+    slogan: {
+        marginTop: '20px',
+        fontSize: '24px', 
+        color: '#E6E6FA', 
+        textShadow: '1px 1px 2px #DAA520', 
     }
 }
 
