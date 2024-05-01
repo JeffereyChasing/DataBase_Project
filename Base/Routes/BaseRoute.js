@@ -203,8 +203,8 @@ database.query(sql,[...values, id], (err, result) => {
 
 
 baserouter.post("/interestgroup",(request, response) => {
-  const sql =  "SELECT u.*, i.MoveInDate, i.RoommateCnt FROM Users u JOIN Interests i ON u.username = i.username WHERE i.MoveInDate = ? AND i.RoommateCnt = ?;";
-  database.query(sql,[ request.body['movein'],request.body['roommate']],(err, result) => {
+  const sql =  "SELECT u.*, i.MoveInDate, i.RoommateCnt FROM Users u JOIN Interests i ON u.username = i.username WHERE i.MoveInDate >= ? AND i.MoveInDate <= ?  AND i.RoommateCnt = ?;";
+  database.query(sql,[ request.body['movein'],request.body['moveinend'],request.body['roommate']],(err, result) => {
     console.log({Result: result});
     return response.json({Status:true,Result:result})          
   })
@@ -214,8 +214,8 @@ baserouter.post("/interestgroup",(request, response) => {
 
 
 baserouter.post("/interestgroup/1",(request, response) => {
-  const sql =  "SELECT u.*, i.MoveInDate, i.RoommateCnt FROM Users u JOIN Interests i ON u.username = i.username WHERE i.MoveInDate = ?;";
-  database.query(sql,[ request.body['movein']],(err, result) => {
+  const sql =  "SELECT u.*, i.MoveInDate, i.RoommateCnt FROM Users u JOIN Interests i ON u.username = i.username WHERE i.MoveInDate >= ?  AND     i.MoveInDate <= ?  ;";
+  database.query(sql,[ request.body['movein'],request.body['moveinend']],(err, result) => {
     console.log({Result: result});
     return response.json({Status:true,Result:result})          
   })

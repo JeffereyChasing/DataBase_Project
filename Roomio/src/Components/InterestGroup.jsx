@@ -15,6 +15,7 @@ const InterestGroup = () => {
   
     const [unit, setUnit] = useState({
         movein: "",
+        moveinend:"",
         roommate:"",
     })
 
@@ -128,6 +129,18 @@ return (
                       style={styles.input}
                   />
               </div>
+              <div style={{marginBottom:"15px"}}>
+                  <label style={{marginRight:"5px"}} htmlFor="movein">Move-in Date  (end):</label>
+                  
+                  <input
+                      type="text"
+                      id="movein"
+                      onChange={(e) => setUnit({...unit, moveinend : e.target.value})} 
+                      required
+                      //mandatory
+                      style={styles.input}
+                  />
+              </div>
               <button onClick={scrollToTop} style={styles.scrollButton}>Scroll to Top</button>
 
               <div style={styles.inputGroup}>
@@ -160,10 +173,23 @@ return (
               <p style={{fontSize:"20px",fontWeight:"bold"}}>Only by Move-In Date</p>
               <div style={{marginBottom:"15px"}}>
                   <label style={{marginRight:"5px"}} htmlFor="movein">Move-in Date:</label>
+                  <p></p>
                   <input
                       type="text"
                       id="movein"
                       onChange={(e) => setUnit({...unit, movein : e.target.value})} 
+                      required
+                      //mandatory
+                      style={styles.input}
+                  />
+              </div>
+
+              <div style={{marginBottom:"15px"}}>
+                  <label style={{marginRight:"5px"}} htmlFor="movein">Move-in Date (end):</label>
+                  <input
+                      type="text"
+                      id="movein"
+                      onChange={(e) => setUnit({...unit, moveinend : e.target.value})} 
                       required
                       //mandatory
                       style={styles.input}
@@ -208,17 +234,6 @@ return (
               </div>
               {/** just the move in date */}
               </form>
-
-
-
-
-
-
-
-
-
-
-
              
             </div>
 
@@ -229,6 +244,9 @@ return (
               </p>
 
 
+
+
+            <div style={styles.tableContainer}>
 
               <table style={styles.table} >
 
@@ -273,7 +291,7 @@ return (
           </table>
 
     
-     
+          </div>
               
       
           
@@ -288,15 +306,15 @@ const styles = {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      height: '100vh',
       backgroundColor: 'lightgrey',
+      
   },
   loginBox: {
       background: 'white',
       padding: 25,
       borderRadius: 10,
       boxShadow: '10 10 30px rgba(0, 0, 0, 0.2)',
-      width: '10000px',
+      width: '1000px',
   },
   header: {
       textAlign: 'center',
@@ -317,6 +335,12 @@ const styles = {
     overflowY: 'auto',
     margin: 'auto'
 },
+tableContainer: {
+    maxHeight: '500px',
+    minHeight:"500px",
+    overflowY: 'auto',
+    margin: 'auto'
+},
 table: {
     width: '100%',
     borderCollapse: 'collapse',
@@ -334,7 +358,9 @@ td: {
     border: '1px solid #ccc',
     padding: '8px',
     textAlign: 'left',
-    fontSize:"11px"},
+    fontSize:"11px"
+
+},
 scrollButton: {
     position: 'fixed',
     right: 20,
