@@ -15,7 +15,7 @@ import BuildingSearch from './Components/BuildingSearch';
 import EditPets from './Components/EditPets';
 import AddPets from './Components/AddPets';
 import SpecificInterest from './Components/SpecificInterest';
-
+import DeletePets from './Components/DeletePets';
 
 // Create a Global Context
 const GlobalContext = createContext();
@@ -53,9 +53,10 @@ function App() {
 
           <Route path='/unitsearch' element={<UnitSearch />}></Route>
           <Route path='/buildingsearch' element={<BuildingSearch />}></Route>
-          <Route path='/editpets/:id' element={<EditPets />}></Route>
+          <Route path='/editpets/:username/:id' element={<EditPets />}></Route>
           <Route path='/addpets/:id' element={<AddPets />}></Route>
           <Route path='/specificinterest/:id' element={<SpecificInterest />}></Route>
+          <Route path='/deletepets/:username/:id/:type' element={<DeletePets />}></Route>
 
 
 

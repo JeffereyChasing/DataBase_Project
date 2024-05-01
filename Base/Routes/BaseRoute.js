@@ -41,6 +41,7 @@ baserouter.post("/login", (request, response) => {
       var f = request.body['email'];
       var g = request.body['phone'];
       var h = hash
+    //salt and hash password
 
       database.query(sql, [a, b, c, d, e, f, g, h], (error, results) => {
         if(error) return response.json({Status: false, Error: "Query Error"})
@@ -73,35 +74,48 @@ baserouter.get('/pets/:id', (req, res) => {
   })
 })
 
-baserouter.put('/editpets/:id', (req, res) => {
-  const id = req.params.id;
-  const sql = "UPDATE pets SET petSize = ? WHERE petName = ? AND petType = ? AND username = ? "
-
+baserouter.put('/editpets/:username/:id', (request, response) => {
+  const id = request.params.id;
+  const username = request.params.username;
+  const sql = "UPDATE pets SET petName = ?, petType = ?, petSize = ?,username = ? WHERE petName = ? AND username = ? "
   const values = [
-      req.body.petsize,
-      req.body.petname,
-      req.body.pettype
+      request.body.petname,
+      request.body.pettype,
+      request.body.petsize,
+      username,
+      id,
+      username
   ]
   database.query(sql,[...values, id], (err, result) => {
+    console.log(result)
       if(err){
         console.log(err)
       }
-      return res.json({Status: true, Result: result})
-  })
-})
-
-
-baserouter.delete('/deletepet/:id', (request, response) => {
-  const id= request.params.id;
-  console.log(id)
-  const sql = "delete from pets where id = ?"
-  database.query(sql,[id], (err, result) => {
-      if(err) return response.json({Status: false, Error: "Query Error"+err})
       return response.json({Status: true, Result: result})
   })
 })
 
-//pets
+
+baserouter.put('/deletepets/:username/:id/:type', (request, response) => {
+  const id = request.params.id;
+  const username = request.params.username;
+  const type = request.params.type;
+  const sql = "DELETE FROM pets WHERE petName = ? AND username = ? AND petType = ?"
+  const values = [
+      id,
+      username,
+      type
+  ]
+  database.query(sql,[...values, id], (err, result) => {
+    console.log(result)
+      if(err){
+        console.log(err)
+      }
+      return response.json({Status: true, Result: result})
+  })
+})
+
+
 
 
 
@@ -135,8 +149,8 @@ baserouter.post("/add/:id", (request, response) => {
 });
 // successfully add interest
 
-baserouter.get('/view',(request,response)=>{
-  const sql = "SELECT AU.*, I.* FROM ApartmentUnit AU JOIN Interests I ON AU.UnitRentID = I.UnitRentID;"
+baserouter.get('/view',(request,response)=>{ 
+  const sql = "SELECT AU.*, I.* FROM ApartmentUnit AU JOIN Interests I ON AU.UnitRentID = I.UnitRentID ORDER BY AU.UnitRentID ASC;"
   database.query(sql,(error,result)=>{
     return response.json({Status:true,Result:result})
   })

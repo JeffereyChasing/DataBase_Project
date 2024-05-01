@@ -23,6 +23,7 @@ const AddPets = () => {
             .then(result=>{
               if(result.data.Status){
                 setMessage("New Pet Added")
+                nav(`/pets/${id}`)
                 console.log(result.data)
               }else{
                 setMessage("Failed")

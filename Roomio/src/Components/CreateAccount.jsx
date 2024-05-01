@@ -28,7 +28,7 @@ const CreateAccount = () => {
               console.log(result.data.Status)
               setMessage("successfully created account")
               setTimeout(() => {
-                nav("/MainPage")
+                nav(`/MainPage/${user.username}`)
             }, 2000); 
             }else{
               console.log(result.data.Status)
