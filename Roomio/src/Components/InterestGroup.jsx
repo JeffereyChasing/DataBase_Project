@@ -40,6 +40,7 @@ const InterestGroup = () => {
     const nav = useNavigate()
     const handleSubmit = (event) => {
         event.preventDefault();
+   
         axios.post("http://localhost:3600/server/interestgroup",unit)
             .then(result=>{
               if(result.data.Status){
@@ -51,6 +52,40 @@ const InterestGroup = () => {
             .catch(err => console.log(err))
             // see what the error is
     };
+
+
+    const handleSubmit1 = (event) => {
+      event.preventDefault();
+ 
+      axios.post("http://localhost:3600/server/interestgroup/1",unit)
+          .then(result=>{
+            if(result.data.Status){
+              console.log(result.data.Result)
+              setRooms(result.data.Result)
+            }
+          },)
+        
+          .catch(err => console.log(err))
+          // see what the error is
+  };
+
+ 
+
+  const handleSubmit2 = (event) => {
+    event.preventDefault();
+
+    axios.post("http://localhost:3600/server/interestgroup/2",unit)
+        .then(result=>{
+          if(result.data.Status){
+            console.log(result.data.Result)
+            setRooms(result.data.Result)
+          }
+        },)
+      
+        .catch(err => console.log(err))
+        // see what the error is
+};
+
 
    
 
@@ -74,7 +109,14 @@ return (
           <h1 style={styles.header}>Interest for Units 
 </h1>
     
-          <form onSubmit={handleSubmit} style={styles.form}>
+
+
+            <div style={{display:"flex"}}>
+
+            <form onSubmit={handleSubmit} style={styles.form}>
+
+              <div style={{marginRight:"100px"}}>
+                <p style={{fontSize:"20px",fontWeight:"bold"}}>Both the Move-In Date and Roomate Count:</p>
               <div style={{marginBottom:"15px"}}>
                   <label style={{marginRight:"5px"}} htmlFor="movein">Move-in Date:</label>
                   <input
@@ -99,8 +141,88 @@ return (
                       style={styles.input}
                   />
               </div>
+              
+              <div style={{}}>
+              <button type="submit" style={{padding: 10, backgroundColor: '#007BFF',color: 'white', border: 'none',
+              borderRadius: 4,  cursor: 'pointer', marginTop: 15}}>Search</button>
+              </div>
+              </div>
+              {/**both the move in date and roommate count */}
+              
+             
+
+              </form>
+
+              <form onSubmit={handleSubmit1} style={styles.form}>
+
+              
+              <div style={{marginRight:"100px", backgroundColor:"transparent",width:"300px"}}>
+              <p style={{fontSize:"20px",fontWeight:"bold"}}>Only by Move-In Date</p>
+              <div style={{marginBottom:"15px"}}>
+                  <label style={{marginRight:"5px"}} htmlFor="movein">Move-in Date:</label>
+                  <input
+                      type="text"
+                      id="movein"
+                      onChange={(e) => setUnit({...unit, movein : e.target.value})} 
+                      required
+                      //mandatory
+                      style={styles.input}
+                  />
+              </div>
+            
               <button type="submit" style={{padding: 10, backgroundColor: '#007BFF',color: 'white', border: 'none',
               borderRadius: 4,  cursor: 'pointer', marginTop: 15,justifyContent:"center"}}>Search</button>
+
+          
+              </div>
+              
+          
+
+              {/** just the move in date */}
+              </form>
+
+              <form onSubmit={handleSubmit2} style={styles.form}>
+
+
+              <div>
+              <p style={{fontSize:"20px",fontWeight:"bold"}}>Only by Roomate Count</p>
+
+              <div style={{marginBottom:"15px"}}>
+                  <label style={{marginRight:"5px"}} htmlFor="movein">Roomate Count::</label>
+                  <input
+                      type="text"
+                      id="roommate"
+                      onChange={(e) => setUnit({...unit, roommate : e.target.value})} 
+                      required
+                      //mandatory
+                      style={styles.input}
+                  />
+
+                  
+              <button type="submit" style={{padding: 10, backgroundColor: '#007BFF',color: 'white', border: 'none',
+              borderRadius: 4,  cursor: 'pointer', marginTop: 15,justifyContent:"center"}}>Search</button>
+
+              </div>
+            
+          
+              </div>
+              {/** just the move in date */}
+              </form>
+
+
+
+
+
+
+
+
+
+
+
+             
+            </div>
+
+              
 
               <p style={{textAlign: 'center', color: '#007BFF', textDecoration: 'none',fontWeight: 'bold',}}>
                    <a href="#"  style={{   color: '#007BFF', textDecoration: 'none',fontWeight: 'bold',}}>Additioanl feature</a>
@@ -154,7 +276,7 @@ return (
      
               
       
-          </form>
+          
       </div>
   </div>
 );
@@ -190,29 +312,30 @@ const styles = {
       border: '1px solid #ccc',
       borderRadius: 4,
   },
-  table: {
+  tableContainer: {
+    maxHeight: '300px',
+    overflowY: 'auto',
+    margin: 'auto'
+},
+table: {
     width: '100%',
     borderCollapse: 'collapse',
-    
-    
-  },
-  th: {
+},
+th: {
     background: '#f4f4f4',
     color: '#333',
     fontWeight: 'bold',
     border: '1px solid #ccc',
     padding: '8px',
     textAlign: 'left',
-  },
-  td: {
+    fontSize:"11px"
+},
+td: {
     border: '1px solid #ccc',
     padding: '8px',
     textAlign: 'left',
-  },
-  tbody:{
-    padding:"300px"
-  },
-  scrollButton: {
+    fontSize:"11px"},
+scrollButton: {
     position: 'fixed',
     right: 20,
     bottom: 20,

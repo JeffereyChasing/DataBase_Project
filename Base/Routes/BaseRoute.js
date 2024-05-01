@@ -197,6 +197,30 @@ baserouter.post("/interestgroup",(request, response) => {
 })
 //additionall feature: select interest
 
+
+
+baserouter.post("/interestgroup/1",(request, response) => {
+  const sql =  "SELECT u.*, i.MoveInDate, i.RoommateCnt FROM Users u JOIN Interests i ON u.username = i.username WHERE i.MoveInDate = ?;";
+  database.query(sql,[ request.body['movein']],(err, result) => {
+    console.log({Result: result});
+    return response.json({Status:true,Result:result})          
+  })
+})
+//additionall feature: select interest
+
+
+baserouter.post("/interestgroup/2",(request, response) => {
+  const sql =  "SELECT u.*, i.MoveInDate, i.RoommateCnt FROM Users u JOIN Interests i ON u.username = i.username WHERE i.RoommateCnt = ?;";
+  database.query(sql,[ request.body['roommate']],(err, result) => {
+    console.log({Result: result});
+    return response.json({Status:true,Result:result})          
+  })
+})
+//additionall feature: select interest
+
+
+
+
   
 
 baserouter.post("/average",(request, response) => {
