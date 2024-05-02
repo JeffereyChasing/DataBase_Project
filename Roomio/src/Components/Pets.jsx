@@ -42,9 +42,13 @@ const Pets = () => {
 
         <h3 style={{fontSize:"35px", textAlign:"center"}}>Pets List</h3>
 
+      <button style={styles.editButton}>
       <Link to= {`/addpets/${id}`} className="btn btn-success" style={{fontSize:"30px",marginLeft:"100px"}}>
         Add New Pets
       </Link>
+      </button>
+
+
       <div style={styles.tableContainer}>
         <table className="table" style={styles.table}>
           <thead>
@@ -66,7 +70,7 @@ const Pets = () => {
                 <td style={styles.td}>
 
                   <button style={styles.editButton}>
-                  <Link to={`/editpets/${e.username}/${e.PetName}`} className="btn btn-info btn-sm me-2" style={styles.editButton}>
+                  <Link to={`/editpets/${e.username}/${e.PetName}/${e.PetType}`} className="btn btn-info btn-sm me-2" style={styles.editButton}>
                     Edit
                   </Link>
                   </button>

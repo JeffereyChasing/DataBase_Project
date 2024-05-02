@@ -180,6 +180,8 @@ const styles = {
     tableContainer: {
         maxHeight: '300px',
         overflowY: 'auto',
+        overflowX: 'auto',
+
         margin: 'auto'
     },
     table: {

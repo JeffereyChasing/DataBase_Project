@@ -34,7 +34,7 @@ const View= () => {
                 <th style={styles.th}>MonthlyRent</th>
 
                 <th style={styles.th}>MoveInDate</th>
-                <th style={styles.th}>RoomateCnt</th>
+                <th style={styles.th}>RoommateCnt</th>
                 <th style={styles.th}>UnitRentID</th>
 
                 <th style={styles.th}>squareFootage</th>
@@ -51,7 +51,7 @@ const View= () => {
                   <td style={styles.td}>{i.MonthlyRent}</td>
 
                   <td style={styles.td}>{i.MoveInDate}</td>
-                  <td style={styles.td}>{i.RoomateCnt}</td>
+                  <td style={styles.td}>{i.RoommateCnt}</td>
                   <td style={styles.td}>{i.UnitRentID}</td>
                   <td style={styles.td}>{i.squareFootage}</td>
                   <td style={styles.td}>{i.unitNumber}</td>

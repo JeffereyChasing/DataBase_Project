@@ -176,7 +176,11 @@ return (
                 </tr>
               ))}
 
+
+
                   </tbody>
+
+
 
             
 
@@ -184,7 +188,8 @@ return (
 
           </table>
 
-    
+          {rooms.length === 0 && <p>There is no such room available</p>}
+
      
               
       
@@ -208,7 +213,7 @@ const styles = {
       padding: 25,
       borderRadius: 10,
       boxShadow: '10 10 30px rgba(0, 0, 0, 0.2)',
-      width: '10000px',
+      width: '90vw',
   },
   header: {
       textAlign: 'center',
@@ -223,29 +228,33 @@ const styles = {
       padding: 10,
       border: '1px solid #ccc',
       borderRadius: 4,
+      marginBottom:"15px"
   },
-  table: {
+  tableContainer: {
+    maxHeight: '300px',
+    overflowY: 'auto',
+    margin: 'auto'
+},
+table: {
     width: '100%',
     borderCollapse: 'collapse',
-    
-    
-  },
-  th: {
+},
+th: {
     background: '#f4f4f4',
     color: '#333',
     fontWeight: 'bold',
     border: '1px solid #ccc',
     padding: '8px',
     textAlign: 'left',
-  },
-  td: {
+    fontSize:"11px"
+},
+td: {
     border: '1px solid #ccc',
     padding: '8px',
     textAlign: 'left',
-  },
-  tbody:{
-    padding:"300px"
-  },
+    fontSize:"11px"
+
+},
   scrollButton: {
     position: 'fixed',
     right: 20,

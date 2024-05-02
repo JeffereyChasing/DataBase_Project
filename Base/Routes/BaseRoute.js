@@ -74,19 +74,19 @@ baserouter.get('/pets/:id', (req, res) => {
   })
 })
 
-baserouter.put('/editpets/:username/:id', (request, response) => {
+baserouter.put('/editpets/:username/:id/:type', (request, response) => {
   const id = request.params.id;
   const username = request.params.username;
-  const sql = "UPDATE pets SET petName = ?, petType = ?, petSize = ?,username = ? WHERE petName = ? AND username = ? "
+  const type = request.params.type;
+  console.log(id,username,type,request.body.petsize)
+  const sql = "UPDATE pets SET petSize = ? WHERE petName = ? AND username = ? AND petType = ? "
   const values = [
-      request.body.petname,
-      request.body.pettype,
       request.body.petsize,
-      username,
       id,
-      username
+      username,
+      type
   ]
-  database.query(sql,[...values, id], (err, result) => {
+  database.query(sql,[...values], (err, result) => {
     console.log(result)
       if(err){
         console.log(err)
@@ -144,7 +144,9 @@ baserouter.post("/add/:id", (request, response) => {
   var c = request.body['RoommateCnt']
   var d = request.body['MoveInDate']
  
-  database.query(sql,[id,b,c,d])
+  database.query(sql,[id,b,c,d],(error,result)=>{
+    return response.json({Status:true,Result:result})
+  })
 
 });
 // successfully add interest
@@ -203,8 +205,8 @@ database.query(sql,[...values, id], (err, result) => {
 
 
 baserouter.post("/interestgroup",(request, response) => {
-  const sql =  "SELECT u.*, i.MoveInDate, i.RoommateCnt FROM Users u JOIN Interests i ON u.username = i.username WHERE i.MoveInDate >= ? AND i.MoveInDate <= ?  AND i.RoommateCnt = ?;";
-  database.query(sql,[ request.body['movein'],request.body['moveinend'],request.body['roommate']],(err, result) => {
+  const sql =  "SELECT u.*, i.UnitRentID, i.MoveInDate, i.RoommateCnt FROM Users u JOIN Interests i ON u.username = i.username WHERE i.MoveInDate >= ? AND i.MoveInDate <= ?  AND i.RoommateCnt = ? AND i.UnitRentID = ?;";
+  database.query(sql,[ request.body['movein'],request.body['moveinend'],request.body['roommate'],request.body['unitid']],(err, result) => {
     console.log({Result: result});
     return response.json({Status:true,Result:result})          
   })
@@ -214,8 +216,8 @@ baserouter.post("/interestgroup",(request, response) => {
 
 
 baserouter.post("/interestgroup/1",(request, response) => {
-  const sql =  "SELECT u.*, i.MoveInDate, i.RoommateCnt FROM Users u JOIN Interests i ON u.username = i.username WHERE i.MoveInDate >= ?  AND     i.MoveInDate <= ?  ;";
-  database.query(sql,[ request.body['movein'],request.body['moveinend']],(err, result) => {
+  const sql =  "SELECT u.*,  i.UnitRentID, i.MoveInDate, i.RoommateCnt FROM Users u JOIN Interests i ON u.username = i.username WHERE i.MoveInDate >= ?  AND     i.MoveInDate <= ?  AND i.UnitRentID = ? ;";
+  database.query(sql,[ request.body['movein'],request.body['moveinend'],request.body['unitid']],(err, result) => {
     console.log({Result: result});
     return response.json({Status:true,Result:result})          
   })
@@ -224,8 +226,8 @@ baserouter.post("/interestgroup/1",(request, response) => {
 
 
 baserouter.post("/interestgroup/2",(request, response) => {
-  const sql =  "SELECT u.*, i.MoveInDate, i.RoommateCnt FROM Users u JOIN Interests i ON u.username = i.username WHERE i.RoommateCnt = ?;";
-  database.query(sql,[ request.body['roommate']],(err, result) => {
+  const sql =  "SELECT u.*, i.UnitRentID,  i.MoveInDate, i.RoommateCnt FROM Users u JOIN Interests i ON u.username = i.username WHERE i.RoommateCnt = ?  AND i.UnitRentID = ?;";
+  database.query(sql,[ request.body['roommate'],request.body['unitid']],(err, result) => {
     console.log({Result: result});
     return response.json({Status:true,Result:result})          
   })

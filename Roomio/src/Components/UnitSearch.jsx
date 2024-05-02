@@ -172,7 +172,7 @@ const styles = {
       padding: 25,
       borderRadius: 10,
       boxShadow: '10 10 30px rgba(0, 0, 0, 0.2)',
-      width: '10000px',
+      width: '90vw',
   },
   header: {
       textAlign: 'center',

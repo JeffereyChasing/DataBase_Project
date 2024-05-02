@@ -14,6 +14,7 @@ const InterestGroup = () => {
   };
   
     const [unit, setUnit] = useState({
+        unitid:"",
         movein: "",
         moveinend:"",
         roommate:"",
@@ -118,6 +119,22 @@ return (
 
               <div style={{marginRight:"100px"}}>
                 <p style={{fontSize:"20px",fontWeight:"bold"}}>Both the Move-In Date and Roomate Count:</p>
+
+                <div style={{marginBottom:"15px"}}>
+                  <label style={{marginRight:"5px"}} htmlFor="movein">Unit ID:</label>
+                  <p></p>
+
+                  <input
+                      type="text"
+                      id="unitid"
+                      onChange={(e) => setUnit({...unit, unitid : e.target.value})} 
+                      required
+                      //mandatory
+                      style={styles.input}
+                  />
+              </div>
+
+
               <div style={{marginBottom:"15px"}}>
                   <label style={{marginRight:"5px"}} htmlFor="movein">Move-in Date:</label>
                   <input
@@ -168,9 +185,23 @@ return (
 
               <form onSubmit={handleSubmit1} style={styles.form}>
 
-              
+        
               <div style={{marginRight:"100px", backgroundColor:"transparent",width:"300px"}}>
               <p style={{fontSize:"20px",fontWeight:"bold"}}>Only by Move-In Date</p>
+
+              <div style={{marginBottom:"15px"}}>
+                  <label style={{marginRight:"5px"}} htmlFor="movein">Unit ID:</label>
+                  <p></p>
+                  {/**for starting a new line */}
+                  <input
+                      type="text"
+                      id="unitid"
+                      onChange={(e) => setUnit({...unit, unitid : e.target.value})} 
+                      required
+                      //mandatory
+                      style={styles.input}
+                  />
+              </div>
               <div style={{marginBottom:"15px"}}>
                   <label style={{marginRight:"5px"}} htmlFor="movein">Move-in Date:</label>
                   <p></p>
@@ -212,7 +243,19 @@ return (
 
               <div>
               <p style={{fontSize:"20px",fontWeight:"bold"}}>Only by Roomate Count</p>
+              <div style={{marginBottom:"15px"}}>
+                  <label style={{marginRight:"5px"}} htmlFor="movein">Unit ID:</label>
+                  <p></p>
 
+                  <input
+                      type="text"
+                      id="unitid"
+                      onChange={(e) => setUnit({...unit, unitid : e.target.value})} 
+                      required
+                      //mandatory
+                      style={styles.input}
+                  />
+              </div>
               <div style={{marginBottom:"15px"}}>
                   <label style={{marginRight:"5px"}} htmlFor="movein">Roomate Count::</label>
                   <input
@@ -253,6 +296,7 @@ return (
       
             <thead>
               <tr>
+                <th style={styles.th}>Unit Rent ID</th>
                 <th style={styles.th}>username</th>
                 <th style={styles.th}>DOB</th>
                 <th style={styles.th}>MoveInDate</th>
@@ -270,6 +314,7 @@ return (
             <tbody>
               {rooms.map(i => (
                 <tr key={i.id}>
+                  <td style={styles.td}>{i.UnitRentID} </td> 
                   <td style={styles.td}>{i.username} </td> 
                   <td style={styles.td}>{i.DOB}</td>
                   <td style={styles.td}>{i.MoveInDate}</td>

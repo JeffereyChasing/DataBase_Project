@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const EditPets = () => {
-    const { id, username } = useParams();
+    const { id, username,type } = useParams();
     const [pet, setPet] = useState({
         petname: "",
         pettype: "",
@@ -24,7 +24,7 @@ const EditPets = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.put(`http://localhost:3600/server/editpets/${username}/${id}`, pet)
+        axios.put(`http://localhost:3600/server/editpets/${username}/${id}/${type}`, pet)
             .then(result => {
                 if (result.data.Status) {
                     navigate(`/pets/${username}`);
@@ -65,30 +65,7 @@ const EditPets = () => {
         <div style={styles.container}>
             <h3 className="text-center mb-4">Edit Pets</h3>
             <form className="row g-3" onSubmit={handleSubmit}>
-                <div className="col-12" style={{            marginBottom: '10px',}}>
-                    <label htmlFor="petname" className="form-label">Pet Name: </label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        style={styles.input}
-                        id="petname"
-                        placeholder="Enter pet name"
-                        value={pet.petname}
-                        onChange={(e) => setPet({ ...pet, petname: e.target.value })}
-                    />
-                </div>
-                <div className="col-12" style={{            marginBottom: '10px',}}>
-                    <label htmlFor="pettype" className="form-label">Pet Type: </label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        style={styles.input}
-                        id="pettype"
-                        placeholder="Enter type"
-                        value={pet.pettype}
-                        onChange={(e) => setPet({ ...pet, pettype: e.target.value })}
-                    />
-                </div>
+              
                 <div className="col-12" style={{            marginBottom: '10px',}}>
                     <label htmlFor="petsize" className="form-label">Pet Size: </label>
                     <input

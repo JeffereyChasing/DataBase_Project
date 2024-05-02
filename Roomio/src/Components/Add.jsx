@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from "axios";
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams ,Link} from 'react-router-dom';
 import View from './View';
 
 const Add = () => {
@@ -13,21 +13,47 @@ const Add = () => {
         MoveInDate: ""
     });
 
+    const nav = useNavigate()
+
+    const [message, setMessage] = useState(''); // State to store the feedback message
+
+
     const handleSubmit = (event) => {
         event.preventDefault();
         axios.post(`http://localhost:3600/server/add/${id}`, values)
             .then(result => {
                 if (result.data.Status) {
+                    setMessage("successfully added your interest")
                     console.log("success");
+                    setTimeout(() => {
+                        nav(`/MainPage/${id}`)
+                    }, 2000); 
+                }else{
+                    setMessage("error occurs, please try with different parameters")
+                    setTimeout(() => {
+                        nav(`/MainPage/${id}`)
+                    }, 2000)
                 }
             })
             .catch(err => {
+                setMessage("error occurs, please try with different parameters")
                 console.log("Error:", err);
+                setTimeout(() => {
+                    nav(`/MainPage/${id}`)
+                }, 2000); 
+
             });
     };
 
     return (
         <div style={styles.container}>
+                         
+        <button style={styles.editButton}>
+                  <Link to={`/mainpage/${id}`} className="btn btn-info btn-sm me-2" style={styles.editButton}>
+                    Go Back
+                  </Link>
+                  </button>
+
             <h1>View All Interests</h1>
             <div style={styles.viewContainer}>
                 <View/>
@@ -77,6 +103,12 @@ const Add = () => {
                     </div>
 
                     <button type="submit" style={styles.button}>Add Post</button>
+
+                    {message && <p style={styles.message}>{message}</p>}
+
+       
+
+
                 </form>
             </div>
         </div>
@@ -131,7 +163,13 @@ const styles = {
         cursor: 'pointer',
         marginTop: 15,
         justifyContent: "center",
-    }
+    },
+    message: {
+        color: 'red',
+        fontWeight: 'bold',
+        textAlign: 'center',
+        marginTop: 15,
+    },
 };
 
 export default Add;
