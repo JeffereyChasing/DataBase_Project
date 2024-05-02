@@ -375,11 +375,6 @@ const styles = {
       border: '1px solid #ccc',
       borderRadius: 4,
   },
-  tableContainer: {
-    maxHeight: '300px',
-    overflowY: 'auto',
-    margin: 'auto'
-},
 tableContainer: {
     maxHeight: '500px',
     minHeight:"500px",
